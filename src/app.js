@@ -40,7 +40,6 @@ app.get('/api/stats', (req, res) => {
   });
 });
 
-
 // Routes
 app.get('/', (req, res) => {
   visitCount++;
