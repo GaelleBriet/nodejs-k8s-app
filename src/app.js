@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
   visitCount++;
   res.json({
     message: 'Bienvenue sur mon API Node.js! (UPDATED)',
-    version: '1.1.0',
+    version: '1.2.0',
     visits: visitCount,
     hostname: process.env.HOSTNAME || 'unknown',
     timestamp: new Date().toISOString()
