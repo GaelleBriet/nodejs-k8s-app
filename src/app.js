@@ -18,8 +18,8 @@ let visitCount = 0;
 app.get('/', (req, res) => {
   visitCount++;
   res.json({
-    message: 'Bienvenue sur mon API Node.js!',
-    version: '1.0.0',
+    message: 'Bienvenue sur mon API Node.js! (UPDATED)',
+    version: '1.1.0',
     visits: visitCount,
     hostname: process.env.HOSTNAME || 'unknown',
     timestamp: new Date().toISOString()

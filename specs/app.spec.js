@@ -8,7 +8,7 @@ describe('API Routes Tests', () => {
 
       expect(res.statusCode).toBe(200);
       expect(res.body).toHaveProperty('message');
-      expect(res.body).toHaveProperty('version', '1.0.0');
+      expect(res.body).toHaveProperty('version', '1.1.0');
       expect(res.body).toHaveProperty('visits');
       expect(res.body).toHaveProperty('hostname');
       expect(res.body).toHaveProperty('timestamp');
@@ -22,6 +22,11 @@ describe('API Routes Tests', () => {
       const visits2 = res2.body.visits;
 
       expect(visits2).toBeGreaterThan(visits1);
+    });
+
+    it('should return updated version', async () => {
+      const res = await request(app).get('/');
+      expect(res.body.version).toBe('1.1.0');
     });
   });
 
