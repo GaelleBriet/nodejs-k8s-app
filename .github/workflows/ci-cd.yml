@@ -126,6 +126,10 @@ jobs:
       security-events: write
 
     steps:
+      # 1. Checkout d'abord (pour avoir le contexte git)
+      - name: Checkout code
+        uses: actions/checkout@v4
+      # 2. Ensuite le scan Trivy
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
@@ -134,26 +138,25 @@ jobs:
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH'
 
-      - name: Checkout code for SARIF upload
-        uses: actions/checkout@v4
-
+      # 3. Upload le fichier généré
       - name: Upload Trivy results to GitHub Security
         uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
 
-      - name: Run npm audit
-        uses: actions/checkout@v4
-
+      # 4. NPM Audit (le Setup Node.js est déjà fait avec checkout)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+            cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: NPM Audit
-        run: |
-          npm audit --audit-level=high
+        run: npm audit --audit-level=high
         continue-on-error: true
 
   notify:
